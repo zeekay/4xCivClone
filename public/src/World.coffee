@@ -1,19 +1,19 @@
 sharedSpriteFrameCache = cc.SpriteFrameCache.getInstance()
 
 class GeographyGenerator
-	constructor: (@options)->
+	constructor: (options = @options)->
 	run: (world)->
 
 class GeologyGenerator extends GeographyGenerator
-	constructor: (@options)->
-		$.extend(@, 
+	constructor: (options = @options)->
+		$.extend(@,
 				landCount: 1
 				oceanPlateCount: 1
 				fractionSubduction: 0.3
 				fractionLand: 0.3
-				hasEqualLand: true, 
+				hasEqualLand: true,
 			options)
-		
+
 	run: (world)->
 		tileMapSize	= world.tileMapSize
 		geographicTileMap = world.geographicTileMap
@@ -37,7 +37,7 @@ class GeologyGenerator extends GeographyGenerator
 		while landCount <= requiredLandCount
 			id = randoms[Math.floor(randoms.length * Math.random())]
 			candidateList = candidateLists[id]
-		
+
 			if candidateList.length > 0
 				i = Math.floor(candidateList.length * Math.random())
 				point = candidateList.splice(i, 1)[0]
@@ -86,12 +86,12 @@ class GeologyGenerator extends GeographyGenerator
 			y = point.y
 
 			geographicTile = geographicTileMap[x][y]
-		
+
 			if geographicTile.subduction == false
 				if geographicTile.landPlateIds.length == 0
 					geographicTile.subduction = true
 					subductionCount+=1
-					@addToCandidates(candidateList, geographicTileMap, tileMapSize, 
+					@addToCandidates(candidateList, geographicTileMap, tileMapSize,
 						[
 							[x-1, y]
 							[x, y-1]
@@ -104,7 +104,7 @@ class GeologyGenerator extends GeographyGenerator
 							[x+2, y]
 							[x+1, y+1]
 							[x, y+2]
-						], 
+						],
 					2)
 				else
 					geographicTile.elevation += Math.sqrt(Math.random() * 2)
@@ -119,7 +119,7 @@ class GeologyGenerator extends GeographyGenerator
 				candidateList.push(new cc.Point(x, (y+tileMapSize.height)%tileMapSize.height))
 
 class ClimateGenerator extends GeographyGenerator
-	constructor: (@options)->
+	constructor: (options = @options) ->
 		$.extend(@,
 				minTemperature: -50
 				maxTemperature: 100
@@ -145,7 +145,7 @@ class ClimateGenerator extends GeographyGenerator
 		halfHeight2 = Math.floor(halfHeight1)
 		if halfHeight1 == halfHeight2
 			halfHeight1 -= 1
-		else 
+		else
 			halfHeight1 = halfHeight2
 
 		halfPiRatio = halfPi/halfHeight2
@@ -172,7 +172,7 @@ class ClimateGenerator extends GeographyGenerator
 			for y in [0...degree30]
 				geographicTileMap[x][halfHeight1 - y].windDirection = 9
 				geographicTileMap[x][halfHeight2 + y].windDirection = 3
-			for y in [degree30...degree60]	
+			for y in [degree30...degree60]
 				geographicTileMap[x][halfHeight1 - y].windDirection = 1
 				geographicTileMap[x][halfHeight2 + y].windDirection = 7
 			for y in [degree60...halfHeight1+1]
@@ -208,7 +208,7 @@ class ClimateGenerator extends GeographyGenerator
 				else if geographicTile.windDirection == 7
 					x = (x + 1) % tileMapSize.width
 					y++
-				else 
+				else
 					throw new Error("this shouldn't happen")
 				rainfall -= @rainfallReductionRateDiagonal
 				geographicTile = geographicTileMap[x][y]
@@ -228,7 +228,7 @@ class ClimateGenerator extends GeographyGenerator
 			for x in [0...tileMapSize.width]
 				for y in [0...tileMapSize.height]
 					@diffuseRainfall(tileMapSize, geographicTileMap, x, y)
-			
+
 			for x in [0...tileMapSize.width]
 				for y in [0...tileMapSize.height]
 					geographicTile = geographicTileMap[x][y]
@@ -241,7 +241,7 @@ class ClimateGenerator extends GeographyGenerator
 		for x in [0...tileMapSize.width]
 			for y in [0...tileMapSize.height]
 				geographicTileMap[x][y].temperature += (geographicTileMap[x][y].rainfall * @temperatureRange)/1000 + @minTemperature/10
-					
+
 	diffuseRainfall: (tileMapSize, geographicTileMap, x, y)->
 		geographicTile = geographicTileMap[x][y]
 		referenceRainfall2 = 0
@@ -271,8 +271,8 @@ class ClimateGenerator extends GeographyGenerator
 			geographicTile.rainfall = Math.max(referenceRainfall1, referenceRainfall2, referenceRainfall3, referenceRainfall4, geographicTile.rainfall)
 			throw new Error("NAN") if isNaN(geographicTile.rainfall)
 
-class GeographicTile 
-	constructor: (@options)->
+class GeographicTile
+	constructor: (options = @options)->
 		$.extend(@,
 			elevation: 0
 			temperature: 0
@@ -289,7 +289,7 @@ class GeographicTile
 		options)
 
 class TileGraphic
-	constructor: (@options)->
+	constructor: (options = @options)->
 		$.extend(@,
 			spriteFrames5: []
 			spriteFrames8: []
@@ -319,9 +319,9 @@ loadTiles = (name) ->
 		spriteFrames6: [sharedSpriteFrameCache.getSpriteFrame(name + "R1"), sharedSpriteFrameCache.getSpriteFrame(name + "R2")]
 		spriteFrames9: [sharedSpriteFrameCache.getSpriteFrame(name + "TR1")]
 		hills: [
-			sharedSpriteFrameCache.getSpriteFrame(name + "Hill1"), 
-			sharedSpriteFrameCache.getSpriteFrame(name + "Hill2"), 
-			sharedSpriteFrameCache.getSpriteFrame(name + "Hill3"), 
+			sharedSpriteFrameCache.getSpriteFrame(name + "Hill1"),
+			sharedSpriteFrameCache.getSpriteFrame(name + "Hill2"),
+			sharedSpriteFrameCache.getSpriteFrame(name + "Hill3"),
 			sharedSpriteFrameCache.getSpriteFrame(name + "Hill4")]
 	}
 
@@ -335,27 +335,27 @@ randomOffset = (spriteFrame, tileSize) ->
 	return new cc.Point(Math.floor(Math.random()*(tileSize.width-rect.size.width/3)+rect.size.width/6), Math.floor(Math.random()*(tileSize.height-rect.size.height/3)+rect.size.height/6))
 
 class @World
-	constructor: (@options)->
+	constructor: (options = @options)->
 		# Size in pixels
 		@tileSize 	= options.tileSize
 
 		# World in pixels
 		@worldSize 	= options.worldSize
-		
+
 		# Derived
 		@tileMapSize = new cc.Size(@worldSize.width/@tileSize.width, @worldSize.height/@tileSize.height)
 		@geographicTileMap = []
-		for i in [0...@tileMapSize.width] 
+		for i in [0...@tileMapSize.width]
 			@geographicTileMap[i] = []
 			for j in [0...@tileMapSize.height]
 				@geographicTileMap[i][j] = new GeographicTile()
 
 		# Options for Generators
-		generatorOptions = 
+		generatorOptions =
 			tileMapSize: @tileMapSize
-		
+
 		$.extend(generatorOptions, options)
-		
+
 		@geologyGenerator = new GeologyGenerator(generatorOptions)
 		@climateGenerator = new ClimateGenerator(generatorOptions)
 
@@ -435,7 +435,7 @@ class @World
 						temperature = "Cold"
 					else
 						temperature = "Freezing"
-						
+
 					if geographicTile.rainfall > 80
 						rainfall = "Wet"
 					else if geographicTile.rainfall > 30
@@ -457,12 +457,12 @@ class @World
 						geographicTile.tileGraphic = PlainTiles
 					else if temperature == "Cold"
 						if rainfall == "Dry"
-							geographicTile.tileGraphic = DesertTiles							
+							geographicTile.tileGraphic = DesertTiles
 						else
 							geographicTile.tileGraphic = TaigaTiles
 					else if temperature == "Freezing"
 						geographicTile.tileGraphic = PolarTiles
-				else 
+				else
 					geographicTile.tileGraphic = null
 
 		for x in [0...@tileMapSize.width]
@@ -522,34 +522,34 @@ class @World
 			t = y-1
 			b = y+1
 
-			if geographicTile.elevation == 0 
+			if geographicTile.elevation == 0
 				# Above
-				geographicTileT = @geographicTileMap[x][t] 
+				geographicTileT = @geographicTileMap[x][t]
 				if geographicTileT
-					if geographicTileT.elevation > 0 
+					if geographicTileT.elevation > 0
 						ret = ret.concat(
 							randomArrayElement(tileGraphic.spriteFrames7),
 							randomArrayElement(tileGraphic.spriteFrames9),
 							randomArrayElement(tileGraphic.spriteFrames8),
 							)
-					else 
-						if @geographicTileMap[l][t].elevation > 0 
+					else
+						if @geographicTileMap[l][t].elevation > 0
 							ret.push(randomArrayElement(tileGraphic.spriteFrames7))
-						if @geographicTileMap[r][t].elevation > 0 
+						if @geographicTileMap[r][t].elevation > 0
 							ret.push(randomArrayElement(tileGraphic.spriteFrames9))
 				#Below
 				geographicTileB = @geographicTileMap[x][b]
 				if geographicTileB
-					if geographicTileB.elevation > 0 
+					if geographicTileB.elevation > 0
 						ret = ret.concat(
 							randomArrayElement(tileGraphic.spriteFrames1),
 							randomArrayElement(tileGraphic.spriteFrames3),
 							randomArrayElement(tileGraphic.spriteFrames2),
 							)
-					else 
-						if @geographicTileMap[l][b].elevation > 0 
+					else
+						if @geographicTileMap[l][b].elevation > 0
 							ret.push(randomArrayElement(tileGraphic.spriteFrames1))
-						if @geographicTileMap[r][b].elevation > 0 
+						if @geographicTileMap[r][b].elevation > 0
 							ret.push(randomArrayElement(tileGraphic.spriteFrames3))
 				#Left
 				if @geographicTileMap[l][y].elevation > 0
@@ -580,9 +580,9 @@ class @World
 			priority = tilePriority.indexOf(tileGraphic)
 			adjacentTile8 = @geographicTileMap[x][t]
 			adjacentTile7 = @geographicTileMap[l][t]
-			adjacentTile4 = @geographicTileMap[l][y] 
-			adjacentTile1 = @geographicTileMap[l][b] 
-			adjacentTile2 = @geographicTileMap[x][b] 
+			adjacentTile4 = @geographicTileMap[l][y]
+			adjacentTile1 = @geographicTileMap[l][b]
+			adjacentTile2 = @geographicTileMap[x][b]
 			adjacentTile3 = @geographicTileMap[r][b]
 			adjacentTile6 = @geographicTileMap[r][y]
 			adjacentTile9 = @geographicTileMap[r][t]
@@ -598,13 +598,13 @@ class @World
 					has7 = true
 					if adjacentTileGraphic8 && tilePriority.indexOf(adjacentTileGraphic8) > tilePriority.indexOf(adjacentTileGraphic7)
 						ret.push(randomArrayElement(adjacentTileGraphic8.spriteFrames7))
-					else 
+					else
 						ret.push(randomArrayElement(adjacentTileGraphic7.spriteFrames7))
 				if adjacentTileGraphic9 && tilePriority.indexOf(adjacentTileGraphic9) > priority
 					has9 = true
 					if adjacentTileGraphic8 && tilePriority.indexOf(adjacentTileGraphic8) > tilePriority.indexOf(adjacentTileGraphic9)
 						ret.push(randomArrayElement(adjacentTileGraphic8.spriteFrames9))
-					else 
+					else
 						ret.push(randomArrayElement(adjacentTileGraphic9.spriteFrames9))
 				if adjacentTileGraphic8 && tilePriority.indexOf(adjacentTileGraphic8) > priority
 					if !has7
@@ -623,13 +623,13 @@ class @World
 					has1 = true
 					if adjacentTileGraphic2 && tilePriority.indexOf(adjacentTileGraphic2) > tilePriority.indexOf(adjacentTileGraphic1)
 						ret.push(randomArrayElement(adjacentTileGraphic2.spriteFrames1))
-					else 
+					else
 						ret.push(randomArrayElement(adjacentTileGraphic1.spriteFrames1))
 				if adjacentTileGraphic3 && tilePriority.indexOf(adjacentTileGraphic3) > priority
 					has3 = true
 					if adjacentTileGraphic2 && tilePriority.indexOf(adjacentTileGraphic2) > tilePriority.indexOf(adjacentTileGraphic3)
 						ret.push(randomArrayElement(adjacentTileGraphic2.spriteFrames3))
-					else 
+					else
 						ret.push(randomArrayElement(adjacentTileGraphic3.spriteFrames3))
 				if adjacentTileGraphic2 && tilePriority.indexOf(adjacentTileGraphic2) > priority
 					if !has1
@@ -666,7 +666,7 @@ class @World
 				return geographicTile.doodads
 
 			geographicTile.doodads = ret = []
-			
+
 			if geographicTile.temperature > 90
 				temperature = "Hot"
 				treeCount = 4
@@ -696,11 +696,11 @@ class @World
 				rainfall = "Dry"
 				treeCount = 0
 
-			if temperature == "Temperate" 
-				tree = leafyTree 
-			else if temperature == "Hot" 
-				tree = junglyTree 
-			else 
+			if temperature == "Temperate"
+				tree = leafyTree
+			else if temperature == "Hot"
+				tree = junglyTree
+			else
 				tree = pineyTree
 
 			if geographicTile.elevation > 0
@@ -732,7 +732,7 @@ class @World
 								x: offset.x
 								y: offset.y)
 				else if geographicTile.elevation <= 4
-					if rainfall == "Wet" || rainfall == "Moist" 
+					if rainfall == "Wet" || rainfall == "Moist"
 						for i in [0...grassCount]
 							offset = randomOffset(grassTuft, @tileSize)
 							ret.push(
@@ -751,7 +751,7 @@ class @World
 				#			spriteFrame: hill
 				#			x: offset.x
 				#			y: offset.y)
-				else 
+				else
 					offset = randomOffset(mountain, @tileSize)
 					if geographicTile.tileGraphic == PolarTiles
 						mt = icyMountain

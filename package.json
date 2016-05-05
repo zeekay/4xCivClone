@@ -1,0 +1,25 @@
+{
+  "name": "4x-civ-clone",
+  "version": "1.0.0",
+  "description": "Engine for a 4X Civilization Clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidtai/4xCivClone.git"
+  },
+  "author": "David Tai <david@verus.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidtai/4xCivClone/issues"
+  },
+  "homepage": "https://github.com/davidtai/4xCivClone#readme",
+  "devDependencies": {
+    "cake-publish": "0.1.1",
+    "cake-test": "0.1.0",
+    "cake-version": "0.1.9",
+    "shortcake": "1.1.17"
+  }
+}
