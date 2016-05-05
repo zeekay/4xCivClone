@@ -16,8 +16,8 @@ task 'clean', 'clean project', ->
   exec 'rm -rf lib'
 
 task 'build', 'build project', (cb) ->
-  # yield exec 'coffee -c -o lib/ src/'
   yield exec '''
+    coffee -c -o lib/ src/
     rm -rf release
     mkdir release
     mkdir release/public
@@ -40,9 +40,10 @@ task 'build', 'build project', (cb) ->
     cp build/Procfile release/Procfile
     ''', cwd: 'public/'
 
-  # yield exec 'bebop release/public'
-
 task 'build-min', 'build project', ['build'], ->
+
+task 'server', 'run server', ->
+  yield exec 'bebop public/release'
 
 task 'watch', 'watch for changes and recompile project', ->
   exec 'coffee -bcmw -o public/lib/ public/src/'
