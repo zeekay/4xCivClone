@@ -20,6 +20,7 @@
     "cake-publish": "0.1.1",
     "cake-test": "0.1.0",
     "cake-version": "0.1.9",
-    "shortcake": "1.1.17"
+    "shortcake": "1.1.17",
+    "uglify-js": "2.6.2"
   }
 }
