@@ -1,5 +1,5 @@
 @Overlay = class Overlay extends cc.Sprite
-	ctor: (@options)->
+	ctor: (options = @options)->
 		# Size in pixels
 		@tileSize 	= options.tileSize
 
@@ -22,7 +22,7 @@
 		for x in [0...overlayCanvas.width] by @tileSize.width
 			ctx.moveTo(x, 0)
 			ctx.lineTo(x, overlayCanvas.height)
-		
+
 		for y in [0...overlayCanvas.height] by @tileSize.height
 			ctx.moveTo(0, y)
 			ctx.lineTo(overlayCanvas.width, y)

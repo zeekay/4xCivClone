@@ -29,10 +29,10 @@ task 'build', 'build project', (cb) ->
     cp -r vendor/random release/public/vendor/random
 
     cat vendor/cocos2d-html5/lib/Cocos2d-html5-v2.1.1.min.js lib/World.js lib/Async.js lib/Background.js lib/CustomSprites.js lib/Engine.js lib/Overlay.js lib/patches.js lib/SpatialHash.js > release/public/gamemerged.js
-    uglifyjs release/public/gamemerged.js > release/public/game.js
+    cp release/public/gamemerged.js release/public/game.js
 
-    uglifyjs main.js > release/public/main.js && rm -f release/public/gamemerged.js
-    uglifyjs config.js > release/public/config.js
+    cp main.js release/public/main.js && rm -f release/public/gamemerged.js
+    cp config.js release/public/config.js
 
     cp build/index.js release/index.js
     cp build/package.json release/package.json

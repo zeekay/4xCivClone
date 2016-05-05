@@ -11,9 +11,9 @@
       return Tile.__super__.constructor.apply(this, arguments);
     }
 
-    Tile.prototype.ctor = function(options1) {
-      this.options = options1;
-      this.spatialHash = options.spatialHash;
+    Tile.prototype.ctor = function(options) {
+      this.options = options;
+      this.spatialHash = this.options.spatialHash;
       if (this.spatialHash != null) {
         this.spatialHash.addNode(this);
       }

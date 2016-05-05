@@ -2,12 +2,12 @@ makeBuffer = (width, height, insertAfterSelector)->
 	buffer = $('<canvas />')[0]
 	buffer.width = width
 	buffer.height = height
-	if insertAfterSelector 
+	if insertAfterSelector
 		$(buffer).insertAfter($(insertAfterSelector).css('display', 'inline-block')[0]).css({width:768, height:768, display:'inline-block', left: 1024})
 	return buffer
 
 @Background =
-	create: (@options)->
+	create: (@options) ->
 		tileMap = @options.tileMap
 		tileMapSize = @options.tileMapSize
 		tileSize = @options.tileSize
@@ -21,7 +21,7 @@ makeBuffer = (width, height, insertAfterSelector)->
 
 		width = tileMapSize.width
 		height = tileMapSize.height
-		
+
 		@buffer = makeBuffer(width * tileSize.width, height * tileSize.height, 'div')
 		@buffer.id = 'preview'
 		ctx = @buffer.getContext('2d')
@@ -96,27 +96,27 @@ makeBuffer = (width, height, insertAfterSelector)->
 					ctxs = ctxsArray[chunkX][chunkY] =
 						bg: bgBuffer.getContext('2d')
 						fg: fgBuffer.getContext('2d')
-		
+
 				spriteFrames = tileSpriteFrameFunction(x, y, tileMap)
 				for spriteFrame in spriteFrames
 					if spriteFrame?
 						spriteFrameRect = spriteFrame.getRect()
 						spriteFrameOffset = spriteFrame.getOffset()
 						ctxs.bg.drawImage(
-							spriteFrame.getTexture(), 
-							spriteFrameRect.origin.x, 
-							spriteFrameRect.origin.y, 
-							spriteFrameRect.size.width, 
+							spriteFrame.getTexture(),
+							spriteFrameRect.origin.x,
+							spriteFrameRect.origin.y,
+							spriteFrameRect.size.width,
 							spriteFrameRect.size.height,
 							(x % modWidth) * tileSize.width - spriteFrameOffset.x,
 							(y % modHeight) * tileSize.height - spriteFrameOffset.y,
 							spriteFrameRect.size.width,
 							spriteFrameRect.size.height)
 						ctx.drawImage(
-							spriteFrame.getTexture(), 
-							spriteFrameRect.origin.x, 
-							spriteFrameRect.origin.y, 
-							spriteFrameRect.size.width, 
+							spriteFrame.getTexture(),
+							spriteFrameRect.origin.x,
+							spriteFrameRect.origin.y,
+							spriteFrameRect.size.width,
 							spriteFrameRect.size.height,
 							x * tileSize.width - spriteFrameOffset.x,
 							y * tileSize.height - @buffer.height - spriteFrameOffset.y,
@@ -129,32 +129,32 @@ makeBuffer = (width, height, insertAfterSelector)->
 						spriteFrameRect = spriteFrame.getRect()
 						spriteFrameOffset = spriteFrame.getOffset()
 						ctxs.bg.drawImage(
-							spriteFrame.getTexture(), 
-							spriteFrameRect.origin.x, 
-							spriteFrameRect.origin.y, 
-							spriteFrameRect.size.width, 
+							spriteFrame.getTexture(),
+							spriteFrameRect.origin.x,
+							spriteFrameRect.origin.y,
+							spriteFrameRect.size.width,
 							spriteFrameRect.size.height,
 							(x % modWidth) * tileSize.width - spriteFrameOffset.x,
 							(y % modHeight) * tileSize.height - spriteFrameOffset.y,
 							spriteFrameRect.size.width,
 							spriteFrameRect.size.height)
 						ctx.drawImage(
-							spriteFrame.getTexture(), 
-							spriteFrameRect.origin.x, 
-							spriteFrameRect.origin.y, 
-							spriteFrameRect.size.width, 
+							spriteFrame.getTexture(),
+							spriteFrameRect.origin.x,
+							spriteFrameRect.origin.y,
+							spriteFrameRect.size.width,
 							spriteFrameRect.size.height,
 							x * tileSize.width - spriteFrameOffset.x,
 							y * tileSize.height - @buffer.height - spriteFrameOffset.y,
 							spriteFrameRect.size.width,
 							spriteFrameRect.size.height)
-		
+
 		for y in [0...height]
 			for x in [0...width]
 				doodadSpriteFrameConfigs = doodadsSpriteFrameFunction(x, y, tileMap)
 				for doodadSpriteFrameConfig in doodadSpriteFrameConfigs
 					doodadSpriteFrame = doodadSpriteFrameConfig.spriteFrame
-					doodadSpriteFrameOffset = doodadSpriteFrame.getOffset()						
+					doodadSpriteFrameOffset = doodadSpriteFrame.getOffset()
 					doodadSpriteFrameConfig.x = doodadSpriteFrameConfig.x - doodadSpriteFrameOffset.x + tileSize.width
 					doodadSpriteFrameConfig.z = doodadSpriteFrameConfig.y if !doodadSpriteFrameConfig.z?
 					doodadSpriteFrameConfig.y = doodadSpriteFrameConfig.z - doodadSpriteFrameOffset.y
@@ -165,20 +165,20 @@ makeBuffer = (width, height, insertAfterSelector)->
 					doodadSpriteFrame = doodadSpriteFrameConfig.spriteFrame
 					doodadSpriteFrameRect = doodadSpriteFrame.getRect()
 					ctxs.fg.drawImage(
-						doodadSpriteFrame.getTexture(), 
-						doodadSpriteFrameRect.origin.x, 
-						doodadSpriteFrameRect.origin.y, 
-						doodadSpriteFrameRect.size.width, 
+						doodadSpriteFrame.getTexture(),
+						doodadSpriteFrameRect.origin.x,
+						doodadSpriteFrameRect.origin.y,
+						doodadSpriteFrameRect.size.width,
 						doodadSpriteFrameRect.size.height,
 						(x % modWidth) * tileSize.width + doodadSpriteFrameConfig.x,
 						(y % modHeight) * tileSize.height + doodadSpriteFrameConfig.y,
 						doodadSpriteFrameRect.size.width,
 						doodadSpriteFrameRect.size.height)
 					ctx.drawImage(
-						doodadSpriteFrame.getTexture(), 
-						doodadSpriteFrameRect.origin.x, 
-						doodadSpriteFrameRect.origin.y, 
-						doodadSpriteFrameRect.size.width, 
+						doodadSpriteFrame.getTexture(),
+						doodadSpriteFrameRect.origin.x,
+						doodadSpriteFrameRect.origin.y,
+						doodadSpriteFrameRect.size.width,
 						doodadSpriteFrameRect.size.height,
 						x * tileSize.width + doodadSpriteFrameConfig.x - tileSize.width,
 						y * tileSize.height - @buffer.height + doodadSpriteFrameConfig.y,

@@ -1,6 +1,6 @@
 @Tile = class Tile extends cc.Sprite
   ctor: (@options) ->
-    @spatialHash = options.spatialHash
+    @spatialHash = @options.spatialHash
     if @spatialHash?
       @spatialHash.addNode(@)
     @initWithTexture(@options.buffer)

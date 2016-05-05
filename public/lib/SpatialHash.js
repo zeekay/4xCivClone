@@ -29,7 +29,9 @@
   this.SpatialHash = SpatialHash = (function() {
     function SpatialHash(options) {
       var i, j, ref, ref1, x, y;
-      this.options = options;
+      if (options == null) {
+        options = this.options;
+      }
       this.binSize = this.options.binSize;
       this.spaceSize = this.options.spaceSize;
       this.border = this.options.border;
@@ -132,7 +134,9 @@
 
     NodeSpatialHash.prototype.constuctor = function(options) {
       var i, node, ref, results, x, y;
-      this.options = options;
+      if (options == null) {
+        options = this.options;
+      }
       this.tileSize = this.options.tileSize;
       this.tileMapSize = this.options.tileMapSize;
       this.parentNode = this.options.parentNode;

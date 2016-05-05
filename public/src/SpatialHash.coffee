@@ -12,7 +12,7 @@ class SpatialHashBin
 
 spatialId = 0
 @SpatialHash = class SpatialHash
-	constructor: (@options)->
+	constructor: (options = @options)->
 		@binSize = @options.binSize
 		@spaceSize = @options.spaceSize
 		@border = @options.border
@@ -30,7 +30,7 @@ spatialId = 0
 
 	isGridPositionInGrid: (position)->
 		position.x >= 0 && position.y >= 0 && position.x < @gridSize.width && position.y < @gridSize.height
-	
+
 	# mostly use internally
 	getBinInGrid: (x, y)->
 		bins = @grid[x]
@@ -64,7 +64,7 @@ spatialId = 0
 		for bin in @activeBins
 			bin.active = false
 		@activeBins.length = 0
-			
+
 		x1 = Math.max(Math.floor((boundingRect.origin.x - @border) / @binSize.width), 0)
 		y1 = Math.max(Math.floor((boundingRect.origin.y - @border) / @binSize.height), 0)
 		x2 = Math.min(Math.ceil((boundingRect.size.width + boundingRect.origin.x + @border) / @binSize.width), @gridSize.width)
@@ -75,11 +75,11 @@ spatialId = 0
 				bin = @getBinInGrid(x, y)
 				if bin?
 					@activeBins.push bin
-					bin.active = true 
+					bin.active = true
 		console.log("ActiveBins:" + @activeBins.length);
 
 @NodeSpatialHash = class NodeSpatialHash
-	constuctor: (@options)->
+	constuctor: (options = @options)->
 		@tileSize = @options.tileSize
 		@tileMapSize = @options.tileMapSize
 		@parentNode = @options.parentNode

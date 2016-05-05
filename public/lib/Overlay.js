@@ -11,9 +11,11 @@
       return Overlay.__super__.constructor.apply(this, arguments);
     }
 
-    Overlay.prototype.ctor = function(options1) {
+    Overlay.prototype.ctor = function(options) {
       var ctx, i, j, overlayCanvas, ref, ref1, ref2, ref3, screenSize, x, y;
-      this.options = options1;
+      if (options == null) {
+        options = this.options;
+      }
       this.tileSize = options.tileSize;
       screenSize = options.screenSize;
       overlayCanvas = $('<canvas />')[0];
