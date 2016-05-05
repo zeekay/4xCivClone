@@ -13,7 +13,7 @@ option '-t', '--test [test]',       'specify test to run'
 option '-v', '--verbose',           'enable verbose test logging'
 
 task 'clean', 'clean project', ->
-  exec 'rm -rf lib'
+  exec 'rm -rf public/release'
 
 task 'build', 'build project', (cb) ->
   yield exec '''
@@ -43,7 +43,7 @@ task 'build', 'build project', (cb) ->
 task 'build-min', 'build project', ['build'], ->
 
 task 'server', 'run server', ->
-  yield exec 'bebop public/release'
+  yield exec 'bebop public/release/public'
 
 task 'watch', 'watch for changes and recompile project', ->
   exec 'coffee -bcmw -o public/lib/ public/src/'
